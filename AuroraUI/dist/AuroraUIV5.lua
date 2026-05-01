@@ -183,6 +183,7 @@ local function gradient(parent, a, b, rot)
 end
 
 local function label(parent, text, size, color, font, xAlign)
+	local lblSize = size and (size + 4) or 18
 	return new("TextLabel", {
 		Parent = parent,
 		BackgroundTransparency = 1,
@@ -193,7 +194,7 @@ local function label(parent, text, size, color, font, xAlign)
 		TextXAlignment = xAlign or Enum.TextXAlignment.Left,
 		TextYAlignment = Enum.TextYAlignment.Center,
 		TextWrapped = true,
-		Size = UDim2.new(1, 0, 0, size and (size + 4) or 18),
+		Size = UDim2.new(1, 0, 0, lblSize),
 	})
 end
 
@@ -700,16 +701,18 @@ function Section:CreateToggle(o)
 		AnchorPoint = Vector2.new(1, 0.5),
 		Position = UDim2.new(1, 0, 0.5, 0),
 		Size = UDim2.fromOffset(46, 24),
-		BackgroundColor3 = state and AuroraUI.Theme.Accent or AuroraUI.Theme.SurfaceSoft,
+		BackgroundColor3 = AuroraUI.Theme.SurfaceSoft,
 	})
+	if state then trackFrame.BackgroundColor3 = AuroraUI.Theme.Accent end
 	corner(trackFrame, 24)
 
+	local thumbStartPos = state and UDim2.fromOffset(25, 3) or UDim2.fromOffset(3, 3)
 	local thumb = new("Frame", {
 		Parent = trackFrame,
 		BorderSizePixel = 0,
 		BackgroundColor3 = Color3.fromRGB(255, 255, 255),
 		Size = UDim2.fromOffset(18, 18),
-		Position = state and UDim2.fromOffset(25, 3) or UDim2.fromOffset(3, 3),
+		Position = thumbStartPos,
 	})
 	corner(thumb, 18)
 
@@ -717,8 +720,10 @@ function Section:CreateToggle(o)
 	function control:Set(v, silent)
 		state = v == true
 		if o.Flag then AuroraUI.Flags[o.Flag] = state end
-		tween(trackFrame, 0.15, {BackgroundColor3 = state and AuroraUI.Theme.Accent or AuroraUI.Theme.SurfaceSoft})
-		tween(thumb, 0.15, {Position = state and UDim2.fromOffset(25, 3) or UDim2.fromOffset(3, 3)})
+		do local c = state and AuroraUI.Theme.Accent or AuroraUI.Theme.SurfaceSoft
+		tween(trackFrame, 0.15, {BackgroundColor3 = c}) end
+		do local p = state and UDim2.fromOffset(25, 3) or UDim2.fromOffset(3, 3)
+		tween(thumb, 0.15, {Position = p}) end
 		if not silent then task.spawn(o.Callback, state) end
 	end
 	function control:Get() return state end
@@ -925,7 +930,8 @@ function Section:CreateDropdown(o)
 	row.MouseButton1Click:Connect(function()
 		local opening = not menu.Visible
 		menu.Visible = true
-		tween(menu, 0.16, {Size = UDim2.new(1, 0, 0, opening and menuHeight or 0)})
+		do local sz = opening and menuHeight or 0
+		tween(menu, 0.16, {Size = UDim2.new(1, 0, 0, sz)}) end
 		if not opening then
 			task.delay(0.16, function() menu.Visible = false end)
 		end
