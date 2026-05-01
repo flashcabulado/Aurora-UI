@@ -1,0 +1,13 @@
+AuroraUI Preview
+
+A modern Roblox UI library inspired by iOS, VisionOS, Control Center and glassmorphism.
+
+Features:
+- Premium glass window
+- Animated sidebar groups
+- iPhone-style toggles
+- Smooth sliders
+- Animated dropdowns
+- Floating dynamic-island-style pill
+- Local-only usage
+- PC and mobile support

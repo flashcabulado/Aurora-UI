@@ -1,0 +1,26 @@
+{
+  "name": "AuroraUI",
+  "version": "1.0.0",
+  "description": "Premium modern Roblox UI Library inspired by iOS and glassmorphism",
+  "author": "Generated UI Library",
+  "type": "Roblox Luau UI Library",
+  "platform": ["PC", "Mobile"],
+  "features": [
+    "Window",
+    "Tabs",
+    "Groups",
+    "Sections",
+    "Buttons",
+    "Toggles",
+    "Sliders",
+    "Dropdowns",
+    "Keybinds",
+    "Notifications",
+    "Themes",
+    "Animations",
+    "Textures",
+    "Gradients",
+    "Minimize",
+    "Hotkey Toggle"
+  ]
+}
